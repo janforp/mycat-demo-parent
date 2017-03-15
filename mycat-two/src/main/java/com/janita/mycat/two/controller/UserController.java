@@ -18,6 +18,7 @@ public class UserController {
 
     @PostMapping
     @ApiOperation(value = "添加用户user")
+
     public User createUser(@RequestBody User user){
         return userService.createUser(user);
     }
