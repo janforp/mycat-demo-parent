@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.janita.mycat.two.dao.MemberDAO">
+    <resultMap id="BaseResultMap" type="com.janita.mycat.two.bean.Member">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="member_name" property="memberName" jdbcType="VARCHAR"/>
+        <result column="member_remark" property="memberRemark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, member_name, member_remark
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.janita.mycat.two.bean.Member">
+        SELECT *
+        FROM member
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.janita.mycat.two.bean.Member">
+        DELETE FROM member
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.janita.mycat.two.bean.Member">
+        INSERT INTO member ( id, 
+          member_name, member_remark )
+        VALUES ( #{id,jdbcType=VARCHAR}, 
+          #{memberName,jdbcType=VARCHAR}, #{memberRemark,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.janita.mycat.two.bean.Member">
+        INSERT INTO member
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                id,
+            <if test="memberName != null">
+                member_name,
+            </if>
+            <if test="memberRemark != null">
+                member_remark,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{id,jdbcType=VARCHAR},
+            <if test="memberName != null">
+                #{memberName,jdbcType=VARCHAR},
+            </if>
+            <if test="memberRemark != null">
+                #{memberRemark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO member ( id, 
+          member_name, member_remark )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.id,jdbcType=VARCHAR}, 
+            #{item.memberName,jdbcType=VARCHAR}, #{item.memberRemark,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.janita.mycat.two.bean.Member">
+        UPDATE member
+        <set>
+            <if test="memberName != null">
+                member_name = #{memberName,jdbcType=VARCHAR},
+            </if>
+            <if test="memberRemark != null">
+                member_remark = #{memberRemark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.janita.mycat.two.bean.Member">
+        UPDATE member
+        SET member_name = #{memberName,jdbcType=VARCHAR},
+            member_remark = #{memberRemark,jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

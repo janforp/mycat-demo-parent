@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.janita.mycat.one.dao.UserDAO">
+    <resultMap id="BaseResultMap" type="com.janita.mycat.one.bean.User">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT id, user_name, age
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.janita.mycat.one.bean.User">
+        SELECT *
+        FROM user
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.janita.mycat.one.bean.User">
+        DELETE FROM user
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.janita.mycat.one.bean.User">
+        INSERT INTO user ( id, 
+          user_name, age )
+        VALUES ( #{id,jdbcType=VARCHAR}, 
+          #{userName,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.janita.mycat.one.bean.User">
+        INSERT INTO user
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                id,
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{id,jdbcType=VARCHAR},
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO user ( id, 
+          user_name, age )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.id,jdbcType=VARCHAR}, 
+            #{item.userName,jdbcType=VARCHAR}, #{item.age,jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.janita.mycat.one.bean.User">
+        UPDATE user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.janita.mycat.one.bean.User">
+        UPDATE user
+        SET user_name = #{userName,jdbcType=VARCHAR},
+            age = #{age,jdbcType=INTEGER}
+        WHERE id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>
