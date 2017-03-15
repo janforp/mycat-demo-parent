@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://org.opencloudb/" >
+
+	<schema name="pay"  checkSQLschema="false" sqlMaxLimit="100"  >
+		<!-- user表根据主键id分表 -->
+	   <table name="user" dataNode="dn01,dn02,dn03" rule="sharding-by-intfile-test" />
+	   <table name="shop" dataNode="dn01,dn02,dn03" rule="sharding-by-intfile-test" />
+	   <table name="food" dataNode="dn01,dn02,dn03" rule="mod-long" />
+	  
+
+	   
+	   <table name="member" dataNode="dn01,dn02" rule="mod-long"> 
+	     <!-- <childTable name="ORDER_DETAIL" primaryKey="ID" joinKey="ORDER_ID" parentKey="ID" />  -->
+	   </table>
+	   
+	</schema>
+
+
+	<dataNode name="dn01" dataHost="localhost" database="node1" />
+	<dataNode name="dn02" dataHost="localhost" database="node2" />
+	<dataNode name="dn03" dataHost="localhost" database="node3" />
+
+	<dataHost name="localhost" maxCon="1000" minCon="10" balance="0"
+	   writeType="0" dbType="mysql" dbDriver="native">
+	   <heartbeat>select 1</heartbeat>
+	   <writeHost host="hostM1" url="localhost:3306" user="root" password="123456" />
+	   <writeHost host="hostM2" url="localhost:3306" user="root" password="123456" />
+	</dataHost>
+
+</mycat:schema>
