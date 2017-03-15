@@ -18,11 +18,6 @@
 		</rule>
     </tableRule>
 
-	<!-- table food start  -->
-   
-	
-	<!-- table food end  -->
-
 	<tableRule name="rule0">
 		<rule>
 		   <columns>user_id</columns>
@@ -62,10 +57,10 @@
 			<algorithm>mod-long</algorithm>
 		</rule>
 	</tableRule>
-
+	<!--分片字段为string，随机分片-->
 	<tableRule name="sharding-by-murmur">
 		<rule>
-			<columns>id</columns>
+			<columns>member_id</columns>
 			<algorithm>murmur</algorithm>
 		</rule>
 	</tableRule>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.janita.mycat.two.dao.FoodDAO">
+    <resultMap id="BaseResultMap" type="com.janita.mycat.two.bean.Food">
+        <id column="food_id" property="foodId" jdbcType="BIGINT"/>
+        <result column="food_name" property="foodName" jdbcType="VARCHAR"/>
+        <result column="food_remark" property="foodRemark" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="SELECT_All_Column">
+        SELECT food_id, food_name, food_remark
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.janita.mycat.two.bean.Food">
+        SELECT *
+        FROM food
+        WHERE food_id = #{foodId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.janita.mycat.two.bean.Food">
+        DELETE FROM food
+        WHERE food_id = #{foodId,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.janita.mycat.two.bean.Food">
+        INSERT INTO food ( food_id, 
+          food_name, food_remark )
+        VALUES ( #{foodId,jdbcType=BIGINT}, 
+          #{foodName,jdbcType=VARCHAR}, #{foodRemark,jdbcType=VARCHAR} )
+    </insert>
+    <insert id="insertSelective" parameterType="com.janita.mycat.two.bean.Food">
+        INSERT INTO food
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                food_id,
+            <if test="foodName != null">
+                food_name,
+            </if>
+            <if test="foodRemark != null">
+                food_remark,
+            </if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffixOverrides="," suffix=")">
+                #{foodId,jdbcType=BIGINT},
+            <if test="foodName != null">
+                #{foodName,jdbcType=VARCHAR},
+            </if>
+            <if test="foodRemark != null">
+                #{foodRemark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO food ( food_id, 
+          food_name, food_remark )
+        VALUES
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.foodId,jdbcType=BIGINT}, 
+            #{item.foodName,jdbcType=VARCHAR}, #{item.foodRemark,jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.janita.mycat.two.bean.Food">
+        UPDATE food
+        <set>
+            <if test="foodName != null">
+                food_name = #{foodName,jdbcType=VARCHAR},
+            </if>
+            <if test="foodRemark != null">
+                food_remark = #{foodRemark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE food_id = #{foodId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.janita.mycat.two.bean.Food">
+        UPDATE food
+        SET food_name = #{foodName,jdbcType=VARCHAR},
+            food_remark = #{foodRemark,jdbcType=VARCHAR}
+        WHERE food_id = #{foodId,jdbcType=BIGINT}
+    </update>
+</mapper>
