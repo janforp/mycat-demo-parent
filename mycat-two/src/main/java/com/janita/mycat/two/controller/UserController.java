@@ -31,6 +31,7 @@ public class UserController {
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id查用户")
     public User getUser(@PathVariable String id){
+
         return userService.getUserById(id);
     }
 }
