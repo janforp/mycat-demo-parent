@@ -22,3 +22,12 @@ CREATE TABLE `member` (
   `member_remark` varchar(50) default NULL COMMENT '备注',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE  IF EXISTS `food`;
+CREATE TABLE `food` (
+ `food_id` BIGINT NOT NULL  COMMENT 'id',
+  `food_name` varchar(200) default NULL COMMENT '食物名字',
+  `food_remark` varchar(50) default NULL COMMENT '备注',
+  PRIMARY KEY  (`food_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
