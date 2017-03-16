@@ -3,11 +3,12 @@
 <mapper namespace="com.janita.mycat.two.dao.OrderDetailDAO">
     <resultMap id="BaseResultMap" type="com.janita.mycat.two.bean.OrderDetail">
         <id column="detail_id" property="detailId" jdbcType="VARCHAR"/>
+        <result column="order_id" property="orderId" jdbcType="VARCHAR"/>
         <result column="detail_content" property="detailContent" jdbcType="VARCHAR"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="SELECT_All_Column">
-        SELECT detail_id, detail_content, remark
+        SELECT detail_id, order_id, detail_content, remark
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.janita.mycat.two.bean.OrderDetail">
         SELECT *
@@ -20,14 +21,17 @@
     </delete>
     <insert id="insert" parameterType="com.janita.mycat.two.bean.OrderDetail">
         INSERT INTO order_detail ( detail_id, 
-          detail_content, remark )
+          order_id, detail_content, remark )
         VALUES ( #{detailId,jdbcType=VARCHAR}, 
-          #{detailContent,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR} )
+          #{orderId,jdbcType=VARCHAR}, #{detailContent,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR} )
     </insert>
     <insert id="insertSelective" parameterType="com.janita.mycat.two.bean.OrderDetail">
         INSERT INTO order_detail
         <trim prefix="(" suffixOverrides="," suffix=")">
                 detail_id,
+            <if test="orderId != null">
+                order_id,
+            </if>
             <if test="detailContent != null">
                 detail_content,
             </if>
@@ -38,6 +42,9 @@
         VALUES
         <trim prefix="(" suffixOverrides="," suffix=")">
                 #{detailId,jdbcType=VARCHAR},
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
             <if test="detailContent != null">
                 #{detailContent,jdbcType=VARCHAR},
             </if>
@@ -48,18 +55,21 @@
     </insert>
     <insert id="insertBatch" parameterType="java.util.List">
         INSERT INTO order_detail ( detail_id, 
-          detail_content, remark )
+          order_id, detail_content, remark )
         VALUES
         <foreach collection="list" item="item" index="index" separator="," >
             (
             #{item.detailId,jdbcType=VARCHAR}, 
-            #{item.detailContent,jdbcType=VARCHAR}, #{item.remark,jdbcType=VARCHAR}
+            #{item.orderId,jdbcType=VARCHAR}, #{item.detailContent,jdbcType=VARCHAR}, #{item.remark,jdbcType=VARCHAR}
             )
         </foreach>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.janita.mycat.two.bean.OrderDetail">
         UPDATE order_detail
         <set>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=VARCHAR},
+            </if>
             <if test="detailContent != null">
                 detail_content = #{detailContent,jdbcType=VARCHAR},
             </if>
@@ -71,7 +81,8 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.janita.mycat.two.bean.OrderDetail">
         UPDATE order_detail
-        SET detail_content = #{detailContent,jdbcType=VARCHAR},
+        SET order_id = #{orderId,jdbcType=VARCHAR},
+            detail_content = #{detailContent,jdbcType=VARCHAR},
             remark = #{remark,jdbcType=VARCHAR}
         WHERE detail_id = #{detailId,jdbcType=VARCHAR}
     </update>

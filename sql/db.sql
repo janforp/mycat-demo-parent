@@ -36,7 +36,6 @@ CREATE TABLE `food` (
 DROP TABLE  IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `order_id` VARCHAR(50) NOT NULL  COMMENT '订单id',
-  `detail_id` VARCHAR(50) NOT NULL  COMMENT '订单详情id',
   `order_type` TINYINT(2) default 0 COMMENT '订单类型',
   `remark` varchar(50) default NULL COMMENT '备注',
   PRIMARY KEY  (`order_id`)
@@ -46,6 +45,7 @@ CREATE TABLE `orders` (
 DROP TABLE  IF EXISTS `order_detail`;
 CREATE TABLE `order_detail` (
   `detail_id` VARCHAR(50) NOT NULL  COMMENT '订单详情id',
+  `order_id` VARCHAR(50) NOT NULL  COMMENT '订单id',
   `detail_content` VARCHAR(200)  default NULL COMMENT '订单详情',
   `remark` varchar(50) default NULL COMMENT '备注',
   PRIMARY KEY  (`detail_id`)

@@ -1,7 +1,7 @@
 package com.janita.mycat.two.bean;
 
 /**
- * Created by com.janita.mycat.two.MybatisCodeGenerate on 2017-03-15
+ * Created by com.janita.mycat.two.MybatisCodeGenerate on 2017-03-16
  */
 public class OrderDetail implements java.io.Serializable {
 
@@ -9,6 +9,8 @@ public class OrderDetail implements java.io.Serializable {
 
     // 订单详情id
     private String detailId;
+    // 订单id
+    private String orderId;
     // 订单详情
     private String detailContent;
     // 备注
@@ -25,8 +27,9 @@ public class OrderDetail implements java.io.Serializable {
     /**
      * full constructor
      */
-    public OrderDetail(String detailId, String detailContent, String remark) {
+    public OrderDetail(String detailId, String orderId, String detailContent, String remark) {
         this.detailId = detailId;
+        this.orderId = orderId;
         this.detailContent = detailContent;
         this.remark = remark;
     }
@@ -45,6 +48,20 @@ public class OrderDetail implements java.io.Serializable {
      */
     public void setDetailId(String detailId) {
         this.detailId = detailId;
+    }
+
+    /**
+     * 订单id
+     */
+    public String getOrderId() {
+        return this.orderId;
+    }
+
+    /**
+     * 订单id
+     */
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     /**

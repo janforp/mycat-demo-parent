@@ -1,3 +1,0 @@
-hubei=0
-tianjin=1
-guangdong=2

@@ -6,16 +6,15 @@
 		<!-- user表根据主键id分表 -->
 	   <table name="user" dataNode="dn01,dn02,dn03" rule="sharding-by-intfile-test" />
 	   <table name="shop" dataNode="dn01,dn02,dn03" rule="sharding-by-intfile-test" />
-		<!-- 此规则要求分片字段必须为long -->
+	   <!-- 此规则要求分片字段必须为long -->
 	   <table name="food" dataNode="dn01,dn02,dn03" rule="mod-long" />
-
-		<!--childtable.joinKey=parenttable.parentKey-->
-	   <table name="order" primaryKey="order_id" dataNode="dn01,dn02,dn03" rule="sharding-by-murmur">
-	      <childTable name="detail" primaryKey="order_id" joinKey="ORDER_ID" parentKey="detail_id" />
+	  
+	   <!-- childtable.joinKey=parenttable.parentKey -->
+	   <table name="orders" primaryKey="order_id" dataNode="dn01,dn02,dn03" rule="sharding-by-murmur"> 
+	     <childTable name="order_detail" primaryKey="detail_id" joinKey="order_id" parentKey="order_id" /> 
 	   </table>
 	   
 	</schema>
-
 
 	<dataNode name="dn01" dataHost="localhost" database="node1" />
 	<dataNode name="dn02" dataHost="localhost" database="node2" />

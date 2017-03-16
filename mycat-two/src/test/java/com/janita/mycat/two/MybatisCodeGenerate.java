@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 @SpringBootTest
 public class MybatisCodeGenerate {
     // -custom
-    private static String[] tableNames = new String[]{"orders"};
+    private static String[] tableNames = new String[]{"orders","order_detail"};
     // 程序会自动找到basePath
     private static String basePath = null;
 

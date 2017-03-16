@@ -3,12 +3,11 @@
 <mapper namespace="com.janita.mycat.two.dao.OrdersDAO">
     <resultMap id="BaseResultMap" type="com.janita.mycat.two.bean.Orders">
         <id column="order_id" property="orderId" jdbcType="VARCHAR"/>
-        <result column="detail_id" property="detailId" jdbcType="VARCHAR"/>
         <result column="order_type" property="orderType" jdbcType="TINYINT"/>
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="SELECT_All_Column">
-        SELECT order_id, detail_id, order_type, remark
+        SELECT order_id, order_type, remark
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.janita.mycat.two.bean.Orders">
         SELECT *
@@ -21,17 +20,14 @@
     </delete>
     <insert id="insert" parameterType="com.janita.mycat.two.bean.Orders">
         INSERT INTO orders ( order_id, 
-          detail_id, order_type, remark )
+          order_type, remark )
         VALUES ( #{orderId,jdbcType=VARCHAR}, 
-          #{detailId,jdbcType=VARCHAR}, #{orderType,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR} )
+          #{orderType,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR} )
     </insert>
     <insert id="insertSelective" parameterType="com.janita.mycat.two.bean.Orders">
         INSERT INTO orders
         <trim prefix="(" suffixOverrides="," suffix=")">
                 order_id,
-            <if test="detailId != null">
-                detail_id,
-            </if>
             <if test="orderType != null">
                 order_type,
             </if>
@@ -42,9 +38,6 @@
         VALUES
         <trim prefix="(" suffixOverrides="," suffix=")">
                 #{orderId,jdbcType=VARCHAR},
-            <if test="detailId != null">
-                #{detailId,jdbcType=VARCHAR},
-            </if>
             <if test="orderType != null">
                 #{orderType,jdbcType=TINYINT},
             </if>
@@ -55,21 +48,18 @@
     </insert>
     <insert id="insertBatch" parameterType="java.util.List">
         INSERT INTO orders ( order_id, 
-          detail_id, order_type, remark )
+          order_type, remark )
         VALUES
         <foreach collection="list" item="item" index="index" separator="," >
             (
             #{item.orderId,jdbcType=VARCHAR}, 
-            #{item.detailId,jdbcType=VARCHAR}, #{item.orderType,jdbcType=TINYINT}, #{item.remark,jdbcType=VARCHAR}
+            #{item.orderType,jdbcType=TINYINT}, #{item.remark,jdbcType=VARCHAR}
             )
         </foreach>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.janita.mycat.two.bean.Orders">
         UPDATE orders
         <set>
-            <if test="detailId != null">
-                detail_id = #{detailId,jdbcType=VARCHAR},
-            </if>
             <if test="orderType != null">
                 order_type = #{orderType,jdbcType=TINYINT},
             </if>
@@ -81,8 +71,7 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.janita.mycat.two.bean.Orders">
         UPDATE orders
-        SET detail_id = #{detailId,jdbcType=VARCHAR},
-            order_type = #{orderType,jdbcType=TINYINT},
+        SET order_type = #{orderType,jdbcType=TINYINT},
             remark = #{remark,jdbcType=VARCHAR}
         WHERE order_id = #{orderId,jdbcType=VARCHAR}
     </update>
